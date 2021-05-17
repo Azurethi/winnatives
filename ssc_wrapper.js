@@ -77,11 +77,11 @@ function schedule_clip(info){
 
 module.exports = {
     native:{
-        setClipboard: WB.setClipboard,
+        setClipboard:   WN.setClipboard,
     
-        sendInput: WB.sendInput,
-        getKeyState: WB.getKeyState,
-        getScanCode: WB.getScanCode,
+        sendInput:      WN.sendInput,
+        getKeyState:    WN.getKeyState,
+        getScanCode:    WN.getScanCode,
     
         FLAG
     },
