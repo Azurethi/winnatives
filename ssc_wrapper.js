@@ -93,6 +93,19 @@ module.exports = {
         keyHandlers[key] = handler;
     },
 
+    checkKeys: ()=>{
+        let keys = Object.keys(keyHandlers);
+        for(let i=0; i<keys.length; i++){
+            let key = keys[i];
+            if(WN.getKeyState(key.charCodeAt(0))) {
+                if(WN.getKeyState(16) && WN.getKeyState(160)){
+                    keyHandlers[key]();
+                }
+                break;
+            }
+        }
+    },
+    
     handleEvent:()=>{
         let rv = 0;
         if(eventQueue.length>0){
@@ -103,19 +116,7 @@ module.exports = {
                 case "clip": rv = WN.setClipboard(event.info); break;
             }
         } else {
-            
-            let keys = Object.keys(keyHandlers);
-            for(let i=0; i<keys.length; i++){
-                let key = keys[i];
-                if(WN.getKeyState(key.charCodeAt(0))) {
-                    if(WN.getKeyState(16) && WN.getKeyState(160)){
-                        keyHandlers[key]();
-                    }
-                    break;
-                }
-            }
-            
-            rv = 1
+            rv = 1;
         }
         return rv;
     },
