@@ -165,6 +165,12 @@ module.exports = {
         [
             {
                 type: FLAG.TYPE.MOUSE, 
+                flags: FLAG.MOUSE.MOVE,
+                dx:0,
+                dy:0
+            },
+            {
+                type: FLAG.TYPE.MOUSE, 
                 flags: FLAG.MOUSE.LEFTDOWN
             },
             {

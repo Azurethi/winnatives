@@ -80,7 +80,7 @@ namespace winnatives {
             assignPropIfHas(env, hadProp, args[0], "scancode",  ip.ki.wScan,    "method_sendInput");
         } else if(ip.type == INPUT_MOUSE){
             assignPropIfHas(env, hadProp, args[0], "dx",        ip.mi.dx,       "method_sendInput");
-            assignPropIfHas(env, hadProp, args[0], "dx",        ip.mi.dx,       "method_sendInput");
+            assignPropIfHas(env, hadProp, args[0], "dy",        ip.mi.dy,       "method_sendInput");
             assignPropIfHas(env, hadProp, args[0], "flags",     ip.mi.dwFlags,  "method_sendInput");
         }
         
