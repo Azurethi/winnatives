@@ -44,6 +44,12 @@ const keyevents = {
         keyEvent(30, KEYUP),
         keyEvent(29, KEYUP)
     ],
+    "CTRL+TAB":[
+        keyEvent(29),
+        keyEvent(15),
+        keyEvent(15, KEYUP),
+        keyEvent(29, KEYUP)
+    ],
     "ENTER":[
         keyEvent(28),
         keyEvent(28, KEYUP)
@@ -146,9 +152,26 @@ module.exports = {
         eventSet.forEach(schedule_key);
     },
 
+    nextCell:()=>{
+        keyevents["CTRL+TAB"].forEach(schedule_key);
+    },
+
     selectLine:(ssc=true)=>{
         if(!ssc) throw "not implemented";
         keyevents["CTRL+A"].forEach(schedule_key);
+    },
+
+    click:()=>{
+        [
+            {
+                type: FLAG.TYPE.MOUSE, 
+                flags: FLAG.MOUSE.LEFTDOWN
+            },
+            {
+                type: FLAG.TYPE.MOUSE, 
+                flags: FLAG.MOUSE.LEFTUP
+            }
+        ].forEach(schedule_key)
     }
 
 }
