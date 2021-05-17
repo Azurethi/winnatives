@@ -62,6 +62,7 @@ const keyevents = {
 
 const eventQueue = [];
 const keyHandlers = {};
+let keyCheckDelay=0
 
 function schedule(event){
     eventQueue.push(event);
@@ -94,18 +95,26 @@ module.exports = {
     },
 
     checkKeys: ()=>{
-        let keys = Object.keys(keyHandlers);
-        for(let i=0; i<keys.length; i++){
-            let key = keys[i];
-            if(WN.getKeyState(key.charCodeAt(0))) {
-                if(WN.getKeyState(16) && WN.getKeyState(160)){
-                    keyHandlers[key]();
+        if(eventQueue.length==0){
+            if(keyCheckDelay==0){
+                let keys = Object.keys(keyHandlers);
+                for(let i=0; i<keys.length; i++){
+                    let key = keys[i];
+                    if(WN.getKeyState(key.charCodeAt(0))) {
+                        if(WN.getKeyState(16) && WN.getKeyState(160)){
+                            keyHandlers[key]();
+                        }
+                        break;
+                    }
                 }
-                break;
+            } else {
+                keyCheckDelay--;
             }
+        } else {
+            keyCheckDelay = 10;
         }
     },
-    
+
     handleEvent:()=>{
         let rv = 0;
         if(eventQueue.length>0){
