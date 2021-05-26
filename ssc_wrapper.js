@@ -82,6 +82,10 @@ function schedule_clip(info){
     schedule({type:"clip", info});
 }
 
+function schedule_move(info){
+    schedule({type:"move", info});
+}
+
 module.exports = {
     native:{
         setClipboard:   WN.setClipboard,
@@ -89,12 +93,15 @@ module.exports = {
         sendInput:      WN.sendInput,
         getKeyState:    WN.getKeyState,
         getScanCode:    WN.getScanCode,
+
+        getCursorPos:   WN.getCursorPos,
+        setCursorPos:   WN.setCursorPos,
     
         FLAG
     },
     keyEvent, keyevents,
 
-    schedule, schedule_key, schedule_clip,
+    schedule, schedule_key, schedule_clip, schedule_move,
 
     onShift: (key, handler) =>{
         keyHandlers[key] = handler;
@@ -129,6 +136,7 @@ module.exports = {
             switch(event.type){
                 case "key" : rv = WN.sendInput(event.info); break;
                 case "clip": rv = WN.setClipboard(event.info); break;
+                case "move": rv = WN.setCursorPos(event.info.x, event.info.y); break;
             }
         } else {
             rv = 1;
@@ -178,6 +186,17 @@ module.exports = {
                 flags: FLAG.MOUSE.LEFTUP
             }
         ].forEach(schedule_key)
-    }
+    },
+
+    getCursorPos:()=>{
+        let {x, y, success} = WN.getCursorPos();
+        if(!success) throw "Failed to get cursor position";
+        return {x, y}
+    },
+
+    moveTo:({x, y})=>{
+        let success = WN.setCursorPos(x,y);
+        if(!success) throw "Failed to set cursor position";
+    },
 
 }
